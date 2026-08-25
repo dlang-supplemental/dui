@@ -50,6 +50,12 @@ void main()
 }
 ----
 
+== Roadmap
+
+Engine gaps and shared priorities: link:https://github.com/dlang-supplemental/dew/blob/main/ROADMAP.adoc[dew ROADMAP.adoc].
+
+dui-specific gaps (forms, focus, navigation, gesture layer): link:ROADMAP.adoc[ROADMAP.adoc].
+
 == License
 
 BSL-1.0

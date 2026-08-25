@@ -1,0 +1,26 @@
+= Roadmap
+
+App-kit gaps for **dui**. Engine unfinished work lives in link:https://github.com/dlang-supplemental/dew/blob/main/ROADMAP.adoc[dew `ROADMAP.adoc`].
+
+Depends on: link:https://github.com/dlang-supplemental/dew[`dew`]. Slogan: *Dew it!*
+
+== Priority next (shared with dew)
+
+. Real windowed Vello demo on dew (host for demos and app-kit samples)
+. Touch capture / gestures on dew, then gesture layer here
+. Deprecate legacy `rmgui` on DUB
+. Flesh out **dui** state / rebuild
+
+== App-kit gaps
+
+* Barebones only today: `DuiApp`, `State!T`
+* No forms helpers
+* No focus traversal
+* No navigation stack / routing
+* No gesture layer (beyond what dew exposes as primitives)
+
+== Related engine work
+
+dui inherits layout, paint, and touch primitives from dew. Until dew has a real window host, richer touch, and stronger layout (wrap / grid / text measure / scroll), app-kit surfaces stay thin by design.
+
+See dew roadmap sections: window host, Vello, wgpu 3D, touch, layout, arenas, adapters, and ship/hygiene.
