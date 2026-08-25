@@ -1,0 +1,3 @@
+= 2026-08-25 - app kit surfaces
+
+Fills the dui roadmap gaps that do not need GPU: forms bound to `State`, Tab focus helpers, a push/pop `NavStack`, and a thin gesture layer over dew's new pointer capture. Hello / unittests use `DuiApp.tap` because dew buttons click on Up.
