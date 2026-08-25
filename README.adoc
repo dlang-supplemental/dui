@@ -28,8 +28,8 @@ endif::[]
 |===
 | Package | Owns
 
-| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **touch/pointer primitives**
-| `dui` | `DuiApp`, `State!T`, rebuild-on-dirty, future gestures / navigation
+| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **touch/pointer/focus primitives**, TextField/CheckBox nodes
+| `dui` | `DuiApp`, `State!T`, forms/focus/nav/gesture helpers
 |===
 
 == Quick start
@@ -49,6 +49,8 @@ void main()
     app.frame();
 }
 ----
+
+Use `app.tap(x, y)` in tests (Down+Up). Buttons click on pointer Up.
 
 Engine package is **`dew`** only (legacy DUB `rmgui` was removed).
 

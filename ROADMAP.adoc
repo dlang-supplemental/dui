@@ -7,20 +7,22 @@ Depends on: link:https://github.com/dlang-supplemental/dew[`dew`]. Slogan: *Dew 
 == Priority next (shared with dew)
 
 . [*x*] Real windowed Vello demo on dew (`examples/vello-window`)
-. Touch capture / gestures on dew, then gesture layer here
+. [*x*] Touch capture / gestures on dew, then gesture layer here
 . [*x*] Legacy `rmgui` DUB package **removed** (use `dew` only)
 . [*x*] Flesh out **dui** state / rebuild (`DuiApp.bind`, `pointerAndFrame`, hello + unittests)
 
 == App-kit gaps
 
 * [*x*] Reliable rebuild-on-dirty for `State!T` + `DuiApp`
-* No forms helpers
-* No focus traversal
-* No navigation stack / routing
-* No gesture layer (beyond what dew exposes as primitives)
+* [*x*] Forms helpers (`boundTextField`, `boundCheckBox`, `formRow`)
+* [*x*] Focus traversal (`focusNext` / `activateFocused` over dew Tab cycle)
+* [*x*] Navigation stack / routing (`NavStack`, `backButton`)
+* [*x*] Gesture layer (`onGesture` Tap / Drag / Swipe; `scrollable` helper)
+* Validation / IME / accessibility still open
+* Before DUB tag: flip `dub.sdl` dew dep from `path="../dew"` to `version="~>0.1.4"` once dew `v0.1.4` is on the registry
 
 == Related engine work
 
-dui inherits layout, paint, and touch primitives from dew. Richer touch and layout (wrap / grid / text measure / scroll) still unlock thicker app-kit surfaces.
+dui inherits layout, paint, and touch primitives from dew. Remaining GPU work (Vello glyphs/paths, wgpu mesh embeds, non-Windows window host) still unlocks thicker visuals but is not required for the app-kit surfaces above.
 
 See dew roadmap sections: window host, Vello, wgpu 3D, touch, layout, arenas, adapters, and ship/hygiene.
