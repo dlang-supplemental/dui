@@ -50,12 +50,25 @@ struct DuiApp
         return dew.pointer(ev);
     }
 
+    bool key(KeyEvent ev) @safe
+    {
+        return dew.key(ev);
+    }
+
     /// Dispatch then rebuild+paint if dirty (handy for tests / single-shot hosts).
     bool pointerAndFrame(PointerEvent ev) @safe
     {
         const hit = pointer(ev);
         frame();
         return hit;
+    }
+
+    /// Synthetic tap: Down + Up at the same point (buttons click on Up).
+    bool tap(float x, float y, uint id = 1) @safe
+    {
+        const a = pointerAndFrame(touchDown(x, y, id));
+        const b = pointerAndFrame(touchUp(x, y, id));
+        return a || b;
     }
 
     void resize(float w, float h) @safe
@@ -106,8 +119,7 @@ unittest
     assert(found);
     assert(bw > 0 && bh > 0);
 
-    const hit = app.pointerAndFrame(touchDown(bx + bw * 0.5f, by + bh * 0.5f));
-    assert(hit);
+    assert(app.tap(bx + bw * 0.5f, by + bh * 0.5f));
     assert(clicks.value == 1);
     assert(!app.needsRebuild);
 
@@ -126,6 +138,6 @@ unittest
         }
     }
     assert(found);
-    assert(app.pointerAndFrame(touchDown(bx + bw * 0.5f, by + bh * 0.5f)));
+    assert(app.tap(bx + bw * 0.5f, by + bh * 0.5f));
     assert(clicks.value == 2);
 }

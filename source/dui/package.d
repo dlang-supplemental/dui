@@ -9,6 +9,10 @@ module dui;
 public import dew;
 public import dui.app;
 public import dui.state;
+public import dui.forms;
+public import dui.focus;
+public import dui.nav;
+public import dui.gesture;
 
 enum string duiVersion = {
     import std.string : strip;
