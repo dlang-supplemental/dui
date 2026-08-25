@@ -12,5 +12,5 @@ public import dui.state;
 
 enum string duiVersion = {
     import std.string : strip;
-    return import("VERSION").strip;
+    return import("DUI_VERSION").strip;
 }();

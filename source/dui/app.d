@@ -2,6 +2,7 @@
 module dui.app;
 
 import dew;
+import dui.state;
 
 alias RootBuilder = Widget delegate(ref UiBuilder ui) @safe;
 
@@ -21,6 +22,12 @@ struct DuiApp
         rebuild();
     }
 
+    /// Bind a `State` so assignments set `needsRebuild`.
+    void bind(T)(ref State!T state) @safe
+    {
+        state.bindRebuild(() { requestRebuild(); });
+    }
+
     void rebuild() @safe
     {
         dew.ui.store.clear();
@@ -37,9 +44,17 @@ struct DuiApp
         dew.frame();
     }
 
+    /// Dispatch pointer; handlers may dirty state — next `frame` rebuilds.
     bool pointer(PointerEvent ev) @safe
     {
-        auto hit = dew.pointer(ev);
+        return dew.pointer(ev);
+    }
+
+    /// Dispatch then rebuild+paint if dirty (handy for tests / single-shot hosts).
+    bool pointerAndFrame(PointerEvent ev) @safe
+    {
+        const hit = pointer(ev);
+        frame();
         return hit;
     }
 
@@ -53,4 +68,64 @@ struct DuiApp
     {
         needsRebuild = true;
     }
+}
+
+unittest
+{
+    import std.format : format;
+
+    State!int clicks = State!int(0);
+    DuiApp app;
+    app.bind(clicks);
+
+    app.init((ref UiBuilder ui) {
+        auto label = format("n=%s", clicks.value);
+        return VStack(
+            Text(label).fontSize(14),
+            Button("Go").touchFriendly().onClick(() { clicks = clicks.value + 1; })
+        ).spacing(8).padding(12);
+    }, new SoftwareBackend(320, 240));
+
+    app.dew.resize(320, 240);
+    app.frame();
+
+    float bx, by, bw, bh;
+    bool found;
+    foreach (ref n; app.dew.ui.store.nodes)
+    {
+        if (n.kind == NodeKind.Button)
+        {
+            bx = n.x;
+            by = n.y;
+            bw = n.w;
+            bh = n.h;
+            found = true;
+            break;
+        }
+    }
+    assert(found);
+    assert(bw > 0 && bh > 0);
+
+    const hit = app.pointerAndFrame(touchDown(bx + bw * 0.5f, by + bh * 0.5f));
+    assert(hit);
+    assert(clicks.value == 1);
+    assert(!app.needsRebuild);
+
+    // Second tap
+    found = false;
+    foreach (ref n; app.dew.ui.store.nodes)
+    {
+        if (n.kind == NodeKind.Button)
+        {
+            bx = n.x;
+            by = n.y;
+            bw = n.w;
+            bh = n.h;
+            found = true;
+            break;
+        }
+    }
+    assert(found);
+    assert(app.pointerAndFrame(touchDown(bx + bw * 0.5f, by + bh * 0.5f)));
+    assert(clicks.value == 2);
 }
