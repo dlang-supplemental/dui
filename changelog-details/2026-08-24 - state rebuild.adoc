@@ -1,0 +1,8 @@
+= 2026-08-24 - state rebuild
+
+Made rebuild-on-dirty reliable for interactive hosts and tests.
+
+* `DuiApp.bind(ref State!T)` wires dirty → `requestRebuild`
+* `pointerAndFrame` for single-shot hosts / examples
+* `State.update` helper; avoid double-firing dirty callbacks
+* Hello + unittests assert touch hit and click count after rebuild

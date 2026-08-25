@@ -6,14 +6,14 @@ Depends on: link:https://github.com/dlang-supplemental/dew[`dew`]. Slogan: *Dew 
 
 == Priority next (shared with dew)
 
-. Real windowed Vello demo on dew (host for demos and app-kit samples)
+. [*x*] Real windowed Vello demo on dew (`examples/vello-window`)
 . Touch capture / gestures on dew, then gesture layer here
-. Deprecate legacy `rmgui` on DUB
-. Flesh out **dui** state / rebuild
+. [*x*] Legacy `rmgui` DUB package **removed** (use `dew` only)
+. [*x*] Flesh out **dui** state / rebuild (`DuiApp.bind`, `pointerAndFrame`, hello + unittests)
 
 == App-kit gaps
 
-* Barebones only today: `DuiApp`, `State!T`
+* [*x*] Reliable rebuild-on-dirty for `State!T` + `DuiApp`
 * No forms helpers
 * No focus traversal
 * No navigation stack / routing
@@ -21,6 +21,6 @@ Depends on: link:https://github.com/dlang-supplemental/dew[`dew`]. Slogan: *Dew 
 
 == Related engine work
 
-dui inherits layout, paint, and touch primitives from dew. Until dew has a real window host, richer touch, and stronger layout (wrap / grid / text measure / scroll), app-kit surfaces stay thin by design.
+dui inherits layout, paint, and touch primitives from dew. Richer touch and layout (wrap / grid / text measure / scroll) still unlock thicker app-kit surfaces.
 
 See dew roadmap sections: window host, Vello, wgpu 3D, touch, layout, arenas, adapters, and ship/hygiene.

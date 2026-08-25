@@ -42,19 +42,25 @@ void main()
 {
     State!int n = State!int(0);
     DuiApp app;
-    n.bindRebuild(() { app.requestRebuild(); });
+    app.bind(n);
     app.init((ref UiBuilder ui) {
-        return Button("Go").touchFriendly().onClick(() { n = n.value + 1; });
+        return Button("Go").touchFriendly().onClick(() { n.update(v => v + 1); });
     }, new SoftwareBackend(640, 400));
     app.frame();
 }
 ----
+
+Engine package is **`dew`** only (legacy DUB `rmgui` was removed).
 
 == Roadmap
 
 Engine gaps and shared priorities: link:https://github.com/dlang-supplemental/dew/blob/main/ROADMAP.adoc[dew ROADMAP.adoc].
 
 dui-specific gaps (forms, focus, navigation, gesture layer): link:ROADMAP.adoc[ROADMAP.adoc].
+
+== Changelog
+
+See link:CHANGELOG.adoc[CHANGELOG.adoc].
 
 == License
 

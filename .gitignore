@@ -20,6 +20,7 @@ MEMORIES.md
 !ROADMAP.adoc
 !AGENTS.md
 !VERSION
+!DUI_VERSION
 !dub.sdl
 !source/
 !source/**
@@ -33,4 +34,5 @@ MEMORIES.md
 !.github/**
 !.gitignore
 examples/**/*.exe
+examples/**/*.pdb
 examples/**/dub.selections.json
