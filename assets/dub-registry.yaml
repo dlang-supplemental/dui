@@ -1,0 +1,5 @@
+package: dui
+repository: https://github.com/dlang-supplemental/dui
+docs_url: https://github.com/dlang-supplemental/dui#readme
+categories:
+  - library.gui

@@ -1,0 +1,6 @@
+= changelog
+
+== 2026-08-24 - Initial dui
+
+* Barebones `DuiApp` + `State!T` on top of `dew`.
+* Hello example; touch-friendly buttons use dew's `touchFriendly` / `TouchCapability`.

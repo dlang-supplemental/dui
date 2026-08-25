@@ -1,0 +1,69 @@
+﻿name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            triplet: linux-x64
+          - os: ubuntu-24.04-arm
+            triplet: linux-arm64
+          - os: windows-latest
+            triplet: windows-x64
+          - os: windows-11-arm
+            triplet: windows-arm64
+          - os: macos-14
+            triplet: macos-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ldc-latest
+      - name: Build hello
+        run: dub build --compiler=ldc2 --build=release
+        working-directory: examples/hello
+      - name: Stage
+        shell: bash
+        run: |
+          mkdir -p "dist/${{ matrix.triplet }}"
+          cp examples/hello/dui-hello* "dist/${{ matrix.triplet }}/" 2>/dev/null || true
+          ls -la "dist/${{ matrix.triplet }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.triplet }}
+          path: dist/${{ matrix.triplet }}/**
+
+  pack:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: slices
+      - name: Zip
+        shell: bash
+        run: |
+          mkdir -p release
+          for d in slices/app-*; do
+            trip=${d#slices/app-}
+            (cd "$d" && zip -r "../../release/dui-hello-${trip}.zip" .)
+          done
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,55 @@
+ifndef::env-github[:icons: font]
+:toc: preamble
+
+ifdef::env-github[]
+++++
+<a id="readme-top"></a>
+<div align="center">
+<a href="https://code.dlang.org/packages/dui"><img src="https://img.shields.io/dub/v/dui.svg?style=for-the-badge" alt="Dub version"></a>
+<a href="https://github.com/dlang-supplemental/dui/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dlang-supplemental/dui.svg?style=for-the-badge" alt="License"></a>
+<br />
+<h3 align="center">dui</h3>
+<p align="center">
+App-kit on top of <a href="https://github.com/dlang-supplemental/dew">dew</a> — state helpers and higher-level UI sugar for D.<br />
+Engine slogan: <strong>Dew it!</strong>
+</p>
+</div>
+++++
+endif::[]
+
+ifndef::env-github[]
+= dui
+
+App-kit on top of https://github.com/dlang-supplemental/dew[dew]. Engine slogan: *Dew it!*
+endif::[]
+
+== Role split
+
+|===
+| Package | Owns
+
+| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **touch/pointer primitives**
+| `dui` | `DuiApp`, `State!T`, rebuild-on-dirty, future gestures / navigation
+|===
+
+== Quick start
+
+[source,d]
+----
+import dui;
+
+void main()
+{
+    State!int n = State!int(0);
+    DuiApp app;
+    n.bindRebuild(() { app.requestRebuild(); });
+    app.init((ref UiBuilder ui) {
+        return Button("Go").touchFriendly().onClick(() { n = n.value + 1; });
+    }, new SoftwareBackend(640, 400));
+    app.frame();
+}
+----
+
+== License
+
+BSL-1.0

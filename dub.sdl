@@ -1,0 +1,27 @@
+﻿name "dui"
+description "App-kit on top of dew — state helpers and higher-level UI sugar for D"
+authors "amdphreak"
+copyright "Copyright © 2026, dlang-supplemental contributors"
+license "BSL-1.0"
+
+targetType "library"
+targetName "dui"
+
+dependency "dew" version="~>0.1.0"
+dependency "tgc" version="~>0.1.1"
+
+configuration "library" {
+	targetType "library"
+	importPaths "source"
+	sourcePaths "source"
+	stringImportPaths "."
+	versions "DewHeadless"
+}
+
+configuration "unittest" {
+	targetType "library"
+	importPaths "source"
+	sourcePaths "source"
+	stringImportPaths "."
+	versions "Tgc_default" "DewHeadless"
+}
