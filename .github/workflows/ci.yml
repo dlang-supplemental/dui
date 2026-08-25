@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 
 on:
   push:
@@ -19,10 +19,28 @@ jobs:
           - os: macos-14
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout dui
+        uses: actions/checkout@v4
+        with:
+          path: dui
+      - name: Checkout dew (matching branch, else main)
+        uses: actions/checkout@v4
+        with:
+          repository: dlang-supplemental/dew
+          path: dew
+          ref: ${{ github.head_ref || github.ref_name }}
+        continue-on-error: true
+      - name: Checkout dew main fallback
+        if: hashFiles('dew/dub.sdl') == ''
+        uses: actions/checkout@v4
+        with:
+          repository: dlang-supplemental/dew
+          path: dew
+          ref: main
       - uses: dlang-community/setup-dlang@v1
         with:
           compiler: ldc-latest
       - run: dub test --compiler=ldc2
+        working-directory: dui
       - run: dub build --compiler=ldc2 --build=release
-        working-directory: examples/hello
+        working-directory: dui/examples/hello

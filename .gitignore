@@ -36,3 +36,5 @@ MEMORIES.md
 examples/**/*.exe
 examples/**/*.pdb
 examples/**/dub.selections.json
+examples/**/dui-hello
+examples/**/dui-hello.exe

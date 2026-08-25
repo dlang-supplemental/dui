@@ -1,5 +1,14 @@
 = changelog
 
+== 2026-08-25 - Forms, focus, nav, gestures
+
+* Forms: `boundTextField`, `boundCheckBox`, `formRow`.
+* Focus: `focusNext` / `focusFirst` / `activateFocused`.
+* Navigation: `NavStack`, `backButton`.
+* Gestures: `onGesture` (Tap/Drag/Swipe), `scrollable`.
+* `DuiApp.tap` (Down+Up); depends on dew path co-dev / upcoming `~>0.1.4`.
+* Version **0.1.2**.
+
 == 2026-08-24 - State rebuild reliability
 
 * `DuiApp.bind` / `pointerAndFrame`; `State.update`; single dirty notify path.
@@ -12,4 +21,7 @@
 * Barebones `DuiApp` + `State!T` on top of `dew`.
 * Hello example; touch-friendly buttons use dew's `touchFriendly` / `TouchCapability`.
 
-Details: link:changelog-details/2026-08-24 - state rebuild.adoc[2026-08-24 - state rebuild].
+Details:
+
+* link:changelog-details/2026-08-25 - app kit surfaces.adoc[2026-08-25 - app kit surfaces]
+* link:changelog-details/2026-08-24 - state rebuild.adoc[2026-08-24 - state rebuild]
