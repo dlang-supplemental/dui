@@ -28,7 +28,7 @@ endif::[]
 |===
 | Package | Owns
 
-| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **touch/pointer/focus primitives**, TextField/CheckBox nodes
+| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **DPI/content scale** (`dew.scale`), **touch/pointer/focus primitives**, TextField/CheckBox nodes
 | `dui` | `DuiApp`, `State!T`, forms/focus/nav/gesture helpers
 |===
 
@@ -53,6 +53,7 @@ void main()
 Use `app.tap(x, y)` in tests (Down+Up). Buttons click on pointer Up.
 
 Engine package is **`dew`** only (legacy DUB `rmgui` was removed).
+DPI / whole-UI scale lives in **dew** (`import dew` re-exports `dew.scale`). Dui hosts inherit `App.contentScale` via `DuiApp.dew` — no separate dui scale API.
 
 == Roadmap
 
