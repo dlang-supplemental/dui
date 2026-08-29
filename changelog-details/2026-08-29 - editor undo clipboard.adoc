@@ -1,0 +1,11 @@
+= 2026-08-29 - Editor, undo, clipboard
+
+== Summary
+
+Notorious and similar note hosts need multiline editing, reversible mode switches, and rich clipboard export without each app reinventing the stack.
+
+== Details
+
+* `dui.editor.boundTextArea` — Enter inserts `\n`.
+* `dui.undo.UndoStack` — push snapshots before risky mutations; undo restores prior doc.
+* `dui.clipboard` — plain UTF-16 text; HTML Format descriptor on Windows (fragment without forcing a document background).

@@ -1,5 +1,12 @@
 = changelog
 
+== 2026-08-29 - Editor, undo, clipboard
+
+* `boundTextArea` for multiline `State!string` editing (Enter / Backspace).
+* `UndoStack!T` snapshot undo/redo for mode switches and bulk edits.
+* `copyText` / `copyHtml` clipboard helpers (Windows HTML Format + Unicode text).
+* Version **0.1.3** (expects dew **0.1.6** surfaces: multiline TextField, Canvas, backgrounds).
+
 == 2026-08-25 - Forms, focus, nav, gestures
 
 * Forms: `boundTextField`, `boundCheckBox`, `formRow`.

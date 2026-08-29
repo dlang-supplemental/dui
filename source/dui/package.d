@@ -13,6 +13,9 @@ public import dui.forms;
 public import dui.focus;
 public import dui.nav;
 public import dui.gesture;
+public import dui.editor;
+public import dui.undo;
+public import dui.clipboard;
 
 enum string duiVersion = {
     import std.string : strip;

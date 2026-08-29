@@ -3,13 +3,13 @@ description "App-kit on top of dew — state helpers and higher-level UI sugar f
 authors "amdphreak"
 copyright "Copyright © 2026, dlang-supplemental contributors"
 license "BSL-1.0"
-version "0.1.2"
+version "0.1.3"
 
 targetType "library"
 targetName "dui"
 
 # Co-dev / CI: sibling checkout of dew (see .github/workflows/ci.yml).
-# Before tagging a DUB release, flip to: dependency "dew" version="~>0.1.4"
+# Before tagging a DUB release, flip to: dependency "dew" version="~>0.1.6"
 dependency "dew" path="../dew"
 dependency "tgc" version="~>0.1.1"
 
