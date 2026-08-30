@@ -18,7 +18,9 @@ configuration "library" {
 	importPaths "source"
 	sourcePaths "source"
 	stringImportPaths "."
-	versions "DewHeadless"
+	# Do not set versions "DewHeadless" here — DUB applies dependency versions to
+	# the root package, which would force dew's Vello stubs even when a host
+	# selects subConfiguration "dew" "gpu". Dew's default library config is already headless.
 }
 
 configuration "unittest" {
