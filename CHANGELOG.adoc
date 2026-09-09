@@ -1,5 +1,15 @@
 = changelog
 
+== 2026-09-09 - Registry dependency and Windows linking
+
+* Use released dew **0.1.6** instead of a sibling checkout in the published package manifest.
+* Link Windows clipboard calls against `user32`, including DMD builds.
+* Keep `Tgc_default` enabled in the unittest configuration and retain tgc **0.1.1**.
+
+Details:
+
+* link:changelog-details/2026-09-09 - registry dependency and Windows linking.adoc[2026-09-09 - registry dependency and Windows linking]
+
 == 2026-08-29 - Editor, undo, clipboard
 
 * `boundTextArea` for multiline `State!string` editing (Enter / Backspace).

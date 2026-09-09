@@ -1,0 +1,9 @@
+= Registry dependency and Windows linking
+
+The DUI 0.1.3 registry archive retained its development-only `dew` sibling path.
+A clean registry consumer therefore failed before compilation because that sibling directory was absent.
+The package manifest now selects released dew 0.1.6 while continuing to select tgc 0.1.1.
+
+Windows DMD builds also failed at link time on the clipboard calls.
+The manifest now links `user32` explicitly for Windows hosts.
+The unittest configuration continues to define `Tgc_default`; TGC has not been disabled or removed.
