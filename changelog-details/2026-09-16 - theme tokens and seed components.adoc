@@ -1,7 +1,11 @@
 = 2026-09-16 - Theme tokens and seed components
 
-* `ThemeMode`, `ThemeTokens`, `Theme`, and `ThemeController` with ~225 ms color lerps (no layout animation).
-* Token-aware `paintThemedTree` in dui (dew `paint_pass` still uses fixed colors when themed paint is off).
-* Seed components: `themedText`, `themedButton`, `themedTextField`, `themedCheckBox`, `themedSwitch`, `themedCard`, `themedDivider`, `themedScreen`, plus bound field helpers.
-* `examples/gallery` headless demo with light/dark toggle and transition check.
-* Follow-up: upstream `ColorRgba` lerp helper in dew; optional per-node text color overrides in engine paint.
+* macOS HIG–style semantic colors (`label`, `secondaryLabel`, `separator`, `accent`, `controlBackground`, …) and SF-like type scale + dense desktop metrics.
+* `ThemeMode`, `ThemeTokens`, `Theme`, `ThemeController` (~225 ms color lerp; metrics snap).
+* Themed paint with `LabelStyle`, `ButtonVariant`, toggle/checkbox/radio chrome.
+* Desktop structure: `windowChrome`, `toolbar`, `SplitView`, `TabView`, `scrollView`, `Section`, `GroupBox`, `Separator`.
+* Controls: `PushButton` (accent/secondary/destructive/plain/bordered/segmented), `SegmentedControl`, `Toggle`, `Checkbox`, `Radio`/`RadioGroup`, basic `Slider`, `TextFieldControl`, `SearchField`, `MenuButton` (stub chrome), `DisclosureTriangle`, `StepperPlaceholder`.
+* Content: `Label` styles, `ListRow`, `OutlineRow`, optional `Card`.
+* Overlay API stubs: `presentAlert`, `presentSheet`, `presentPopover`, `presentContextMenu` in `overlay_stub.d`.
+* `examples/gallery`: split sidebar + toolbar desktop layout, theme toggle, transition assert.
+* Deferred: real overlays/menus, stepper, NavigationStack/compact breakpoints, vibrancy/blur, dew `ColorRgba` lerp upstream.
