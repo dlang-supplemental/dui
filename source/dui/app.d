@@ -187,7 +187,7 @@ unittest
     bool sawPrimary;
     foreach (ref cmd; app.dew.list.cmds)
     {
-        if (cmd.op == DrawOp.FillRoundedRect && cmd.color.r == app.theme.current.colors.primary.r)
+        if (cmd.op == DrawOp.FillRoundedRect && cmd.color.r == app.theme.current.colors.accent.r)
             sawPrimary = true;
     }
     assert(sawPrimary);
