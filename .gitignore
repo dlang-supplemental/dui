@@ -38,3 +38,5 @@ examples/**/*.pdb
 examples/**/dub.selections.json
 examples/**/dui-hello
 examples/**/dui-hello.exe
+examples/**/dui-gallery
+examples/**/dui-gallery.exe
