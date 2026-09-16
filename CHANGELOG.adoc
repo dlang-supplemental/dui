@@ -1,5 +1,16 @@
 = changelog
 
+== 2026-09-16 - Theme tokens and seed components
+
+* Light/dark `ThemeTokens` (colors, spacing, radii, type sizes) and `ThemeController` color transitions (~225 ms).
+* Themed paint pass + seed components (`themedButton`, `themedText`, fields, `themedSwitch`, `themedCard`, etc.).
+* `examples/gallery` demonstrates components and animated theme toggle.
+* Version **0.1.5**.
+
+Details:
+
+* link:changelog-details/2026-09-16 - theme tokens and seed components.adoc[2026-09-16 - theme tokens and seed components]
+
 == 2026-09-09 - Registry dependency and Windows linking
 
 * Use released dew **0.1.6** instead of a sibling checkout in the published package manifest.

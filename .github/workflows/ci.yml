@@ -44,3 +44,5 @@ jobs:
         working-directory: dui
       - run: dub build --compiler=ldc2 --build=release
         working-directory: dui/examples/hello
+      - run: dub build --compiler=ldc2 --build=release
+        working-directory: dui/examples/gallery
