@@ -1,0 +1,9 @@
+= 2026-09-16 - Theme tokens (minimal slice)
+
+* `ThemeMode`, `ThemeColors`, `ThemeMetrics`, `ThemeTokens`, `Theme.light()` / `Theme.dark()`.
+* `ThemeController` with ~225 ms color lerp (`lerpColor` local helper; dew follow-up).
+* `DuiApp.theme`, optional `themedPaint`, `frame(dtMs)` for animation without rebuild.
+* `paintThemedTree` maps dew widget kinds to token colors.
+* `examples/gallery` — minimal light/dark toggle + transition assert only.
+
+Deferred until tgc responsiveness testing is green: desktop component host, HIG gallery, overlay/menu stubs, and further theme-driven controls.
