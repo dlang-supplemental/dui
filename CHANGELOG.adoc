@@ -2,9 +2,9 @@
 
 == 2026-09-16 - Theme tokens and seed components
 
-* macOS desktop token set (HIG semantic colors, SF-like type scale, dense spacing) and `ThemeController` color transitions (~225 ms).
-* Themed paint + desktop components (`PushButton`, `SplitView`, `Toggle`, `SearchField`, …); overlay host stubs only.
-* `examples/gallery` split-view desktop demo with animated light/dark toggle.
+* Minimal theme tokens (`ThemeMode`, semantic `ThemeColors`, `ThemeMetrics`) and `ThemeController` color transitions (~225 ms).
+* `paintThemedTree` + `DuiApp` themed frame path; `examples/gallery` is a minimal toggle demo only.
+* Desktop component host / gallery expansion **deferred** until tgc responsiveness testing is green.
 * Version **0.1.5**.
 
 Details:

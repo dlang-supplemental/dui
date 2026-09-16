@@ -1,11 +1,9 @@
-= 2026-09-16 - Theme tokens and seed components
+= 2026-09-16 - Theme tokens (minimal slice)
 
-* macOS HIG–style semantic colors (`label`, `secondaryLabel`, `separator`, `accent`, `controlBackground`, …) and SF-like type scale + dense desktop metrics.
-* `ThemeMode`, `ThemeTokens`, `Theme`, `ThemeController` (~225 ms color lerp; metrics snap).
-* Themed paint with `LabelStyle`, `ButtonVariant`, toggle/checkbox/radio chrome.
-* Desktop structure: `windowChrome`, `toolbar`, `SplitView`, `TabView`, `scrollView`, `Section`, `GroupBox`, `Separator`.
-* Controls: `PushButton` (accent/secondary/destructive/plain/bordered/segmented), `SegmentedControl`, `Toggle`, `Checkbox`, `Radio`/`RadioGroup`, basic `Slider`, `TextFieldControl`, `SearchField`, `MenuButton` (stub chrome), `DisclosureTriangle`, `StepperPlaceholder`.
-* Content: `Label` styles, `ListRow`, `OutlineRow`, optional `Card`.
-* Overlay API stubs: `presentAlert`, `presentSheet`, `presentPopover`, `presentContextMenu` in `overlay_stub.d`.
-* `examples/gallery`: split sidebar + toolbar desktop layout, theme toggle, transition assert.
-* Deferred: real overlays/menus, stepper, NavigationStack/compact breakpoints, vibrancy/blur, dew `ColorRgba` lerp upstream.
+* `ThemeMode`, `ThemeColors`, `ThemeMetrics`, `ThemeTokens`, `Theme.light()` / `Theme.dark()`.
+* `ThemeController` with ~225 ms color lerp (`lerpColor` local helper; dew follow-up).
+* `DuiApp.theme`, optional `themedPaint`, `frame(dtMs)` for animation without rebuild.
+* `paintThemedTree` maps dew widget kinds to token colors.
+* `examples/gallery` — minimal light/dark toggle + transition assert only.
+
+Deferred until tgc responsiveness testing is green: desktop component host, HIG gallery, overlay/menu stubs, and further theme-driven controls.
