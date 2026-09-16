@@ -19,6 +19,7 @@ public import dui.clipboard;
 public import dui.theme;
 public import dui.theme_paint;
 public import dui.components;
+public import dui.overlay_stub;
 
 enum string duiVersion = {
     import std.string : strip;

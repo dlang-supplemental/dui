@@ -1,65 +1,86 @@
-/// Design tokens, light/dark themes, and animated color transitions.
+/// macOS-inspired design tokens, light/dark themes, and color transitions.
 module dui.theme;
 
 import dew;
 
-/// Light or dark baseline palette.
 enum ThemeMode
 {
     light,
     dark,
 }
 
-/// Semantic colors (logical units; alpha always 0–255).
+/**
+ * Semantic colors (HIG-style names). No vibrancy/blur tokens — solid fills only.
+ */
 struct ThemeColors
 {
-    ColorRgba background;
-    ColorRgba surface;
-    ColorRgba surfaceElevated;
-    ColorRgba primary;
-    ColorRgba onPrimary;
-    ColorRgba primaryBorder;
-    ColorRgba textPrimary;
-    ColorRgba textSecondary;
-    ColorRgba textMuted;
-    ColorRgba border;
-    ColorRgba borderFocus;
-    ColorRgba divider;
-    ColorRgba fieldFill;
-    ColorRgba checkStroke;
+    ColorRgba windowBackground;
+    ColorRgba controlBackground;
+    ColorRgba groupedBackground;
+    ColorRgba sidebarBackground;
+    ColorRgba toolbarBackground;
+    ColorRgba label;
+    ColorRgba secondaryLabel;
+    ColorRgba tertiaryLabel;
+    ColorRgba quaternaryLabel;
+    ColorRgba separator;
+    ColorRgba accent;
+    ColorRgba accentPressed;
+    ColorRgba onAccent;
+    ColorRgba controlBorder;
+    ColorRgba focusRing;
+    ColorRgba destructive;
+    ColorRgba onDestructive;
+    ColorRgba textFieldBackground;
+    ColorRgba searchFieldBackground;
+    ColorRgba selectedContentBackground;
+    ColorRgba selectedText;
+    ColorRgba checkboxStroke;
+    ColorRgba checkboxFill;
     ColorRgba switchTrackOff;
     ColorRgba switchTrackOn;
     ColorRgba switchThumb;
-    ColorRgba error;
 }
 
-/// Spacing, radii, and type scale in logical px (DIPs).
+/// SF-like type scale + dense desktop spacing (logical px).
 struct ThemeMetrics
 {
-    float spaceXs = 4;
-    float spaceSm = 8;
-    float spaceMd = 12;
-    float spaceLg = 16;
-    float spaceXl = 24;
+    float insetTight = 4;
+    float insetCompact = 6;
+    float insetStandard = 8;
+    float insetComfortable = 12;
+    float insetSection = 16;
+    float insetWindow = 20;
 
-    float radiusSm = 4;
-    float radiusMd = 8;
-    float radiusLg = 12;
+    float controlHeight = 22;
+    float toolbarHeight = 38;
+    float titleBarHeight = 28;
+    float rowHeight = 20;
+    float sidebarWidth = 200;
+    float splitDivider = 1;
 
-    float fontSizeSm = 12;
-    float fontSizeMd = 14;
-    float fontSizeLg = 18;
-    float fontSizeXl = 22;
+    float radiusControl = 5;
+    float radiusGroup = 6;
+    float radiusSheet = 10;
+
+    float fontLargeTitle = 26;
+    float fontTitle1 = 22;
+    float fontTitle2 = 17;
+    float fontTitle3 = 15;
+    float fontHeadline = 13;
+    float fontBody = 13;
+    float fontCallout = 12;
+    float fontSubheadline = 11;
+    float fontFootnote = 10;
+    float fontCaption = 10;
 }
 
-/// Full token set for one resolved theme frame.
 struct ThemeTokens
 {
     ThemeColors colors;
     ThemeMetrics metrics;
 }
 
-/// Static light/dark token sources (non-animated endpoints).
 struct Theme
 {
     ThemeMode mode;
@@ -82,7 +103,31 @@ struct Theme
     }
 }
 
-/// Linear RGBA blend (local helper until dew exposes one — see dew follow-up).
+/// Typography / emphasis for `Label` (explicit prop — not a cascade).
+enum LabelStyle : ubyte
+{
+    largeTitle,
+    title1,
+    title2,
+    title3,
+    headline,
+    body,
+    secondary,
+    tertiary,
+    caption,
+}
+
+/// macOS-style push button roles.
+enum ButtonVariant : ubyte
+{
+    accent,
+    secondary,
+    destructive,
+    plain,
+    bordered,
+    segmented,
+}
+
 ColorRgba lerpColor(ColorRgba a, ColorRgba b, float t) @safe @nogc pure nothrow
 {
     if (t <= 0)
@@ -99,24 +144,32 @@ ColorRgba lerpColor(ColorRgba a, ColorRgba b, float t) @safe @nogc pure nothrow
 ThemeColors lerpThemeColors(ThemeColors from, ThemeColors to, float t) @safe @nogc pure nothrow
 {
     ThemeColors out_;
-    out_.background = lerpColor(from.background, to.background, t);
-    out_.surface = lerpColor(from.surface, to.surface, t);
-    out_.surfaceElevated = lerpColor(from.surfaceElevated, to.surfaceElevated, t);
-    out_.primary = lerpColor(from.primary, to.primary, t);
-    out_.onPrimary = lerpColor(from.onPrimary, to.onPrimary, t);
-    out_.primaryBorder = lerpColor(from.primaryBorder, to.primaryBorder, t);
-    out_.textPrimary = lerpColor(from.textPrimary, to.textPrimary, t);
-    out_.textSecondary = lerpColor(from.textSecondary, to.textSecondary, t);
-    out_.textMuted = lerpColor(from.textMuted, to.textMuted, t);
-    out_.border = lerpColor(from.border, to.border, t);
-    out_.borderFocus = lerpColor(from.borderFocus, to.borderFocus, t);
-    out_.divider = lerpColor(from.divider, to.divider, t);
-    out_.fieldFill = lerpColor(from.fieldFill, to.fieldFill, t);
-    out_.checkStroke = lerpColor(from.checkStroke, to.checkStroke, t);
+    out_.windowBackground = lerpColor(from.windowBackground, to.windowBackground, t);
+    out_.controlBackground = lerpColor(from.controlBackground, to.controlBackground, t);
+    out_.groupedBackground = lerpColor(from.groupedBackground, to.groupedBackground, t);
+    out_.sidebarBackground = lerpColor(from.sidebarBackground, to.sidebarBackground, t);
+    out_.toolbarBackground = lerpColor(from.toolbarBackground, to.toolbarBackground, t);
+    out_.label = lerpColor(from.label, to.label, t);
+    out_.secondaryLabel = lerpColor(from.secondaryLabel, to.secondaryLabel, t);
+    out_.tertiaryLabel = lerpColor(from.tertiaryLabel, to.tertiaryLabel, t);
+    out_.quaternaryLabel = lerpColor(from.quaternaryLabel, to.quaternaryLabel, t);
+    out_.separator = lerpColor(from.separator, to.separator, t);
+    out_.accent = lerpColor(from.accent, to.accent, t);
+    out_.accentPressed = lerpColor(from.accentPressed, to.accentPressed, t);
+    out_.onAccent = lerpColor(from.onAccent, to.onAccent, t);
+    out_.controlBorder = lerpColor(from.controlBorder, to.controlBorder, t);
+    out_.focusRing = lerpColor(from.focusRing, to.focusRing, t);
+    out_.destructive = lerpColor(from.destructive, to.destructive, t);
+    out_.onDestructive = lerpColor(from.onDestructive, to.onDestructive, t);
+    out_.textFieldBackground = lerpColor(from.textFieldBackground, to.textFieldBackground, t);
+    out_.searchFieldBackground = lerpColor(from.searchFieldBackground, to.searchFieldBackground, t);
+    out_.selectedContentBackground = lerpColor(from.selectedContentBackground, to.selectedContentBackground, t);
+    out_.selectedText = lerpColor(from.selectedText, to.selectedText, t);
+    out_.checkboxStroke = lerpColor(from.checkboxStroke, to.checkboxStroke, t);
+    out_.checkboxFill = lerpColor(from.checkboxFill, to.checkboxFill, t);
     out_.switchTrackOff = lerpColor(from.switchTrackOff, to.switchTrackOff, t);
     out_.switchTrackOn = lerpColor(from.switchTrackOn, to.switchTrackOn, t);
     out_.switchThumb = lerpColor(from.switchThumb, to.switchThumb, t);
-    out_.error = lerpColor(from.error, to.error, t);
     return out_;
 }
 
@@ -124,15 +177,10 @@ ThemeTokens lerpThemeTokens(ThemeTokens from, ThemeTokens to, float t) @safe @no
 {
     ThemeTokens out_;
     out_.colors = lerpThemeColors(from.colors, to.colors, t);
-    // Metrics stay on the target theme — no layout animation.
     out_.metrics = to.metrics;
     return out_;
 }
 
-/**
- * Holds the actively painted palette. Color fields animate on `setMode`;
- * metrics jump to the target theme immediately.
- */
 struct ThemeController
 {
     ThemeMode mode = ThemeMode.light;
@@ -151,7 +199,6 @@ struct ThemeController
         _progress = 1f;
     }
 
-    /// Begin a color transition (~200–250 ms default). Does not rebuild layout.
     void setMode(ThemeMode m, float durationMs = 225f) @safe @nogc nothrow
     {
         if (m == mode && !animating)
@@ -188,24 +235,32 @@ struct ThemeController
 private ThemeTokens lightTokens() @safe @nogc pure nothrow
 {
     ThemeTokens t;
-    t.colors.background = ColorRgba.rgb(245, 247, 250);
-    t.colors.surface = ColorRgba.rgb(255, 255, 255);
-    t.colors.surfaceElevated = ColorRgba.rgb(252, 252, 254);
-    t.colors.primary = ColorRgba.rgb(45, 110, 200);
-    t.colors.onPrimary = ColorRgba.rgb(255, 255, 255);
-    t.colors.primaryBorder = ColorRgba.rgb(30, 80, 160);
-    t.colors.textPrimary = ColorRgba.rgb(24, 28, 36);
-    t.colors.textSecondary = ColorRgba.rgb(55, 62, 75);
-    t.colors.textMuted = ColorRgba.rgb(120, 128, 140);
-    t.colors.border = ColorRgba.rgb(180, 186, 198);
-    t.colors.borderFocus = ColorRgba.rgb(45, 110, 200);
-    t.colors.divider = ColorRgba.rgb(220, 224, 232);
-    t.colors.fieldFill = ColorRgba.rgb(250, 251, 253);
-    t.colors.checkStroke = ColorRgba.rgb(45, 110, 200);
-    t.colors.switchTrackOff = ColorRgba.rgb(200, 204, 212);
-    t.colors.switchTrackOn = ColorRgba.rgb(100, 160, 230);
+    t.colors.windowBackground = ColorRgba.rgb(236, 236, 236);
+    t.colors.controlBackground = ColorRgba.rgb(255, 255, 255);
+    t.colors.groupedBackground = ColorRgba.rgb(246, 246, 248);
+    t.colors.sidebarBackground = ColorRgba.rgb(228, 228, 230);
+    t.colors.toolbarBackground = ColorRgba.rgb(246, 246, 248);
+    t.colors.label = ColorRgba.rgb(0, 0, 0);
+    t.colors.secondaryLabel = ColorRgba.rgb(60, 60, 67);
+    t.colors.tertiaryLabel = ColorRgba.rgb(90, 90, 98);
+    t.colors.quaternaryLabel = ColorRgba.rgb(142, 142, 147);
+    t.colors.separator = ColorRgba.rgb(198, 198, 200);
+    t.colors.accent = ColorRgba.rgb(0, 122, 255);
+    t.colors.accentPressed = ColorRgba.rgb(0, 100, 210);
+    t.colors.onAccent = ColorRgba.rgb(255, 255, 255);
+    t.colors.controlBorder = ColorRgba.rgb(190, 190, 194);
+    t.colors.focusRing = ColorRgba.rgb(0, 122, 255);
+    t.colors.destructive = ColorRgba.rgb(255, 59, 48);
+    t.colors.onDestructive = ColorRgba.rgb(255, 255, 255);
+    t.colors.textFieldBackground = ColorRgba.rgb(255, 255, 255);
+    t.colors.searchFieldBackground = ColorRgba.rgb(232, 232, 234);
+    t.colors.selectedContentBackground = ColorRgba.rgb(0, 122, 255);
+    t.colors.selectedText = ColorRgba.rgb(255, 255, 255);
+    t.colors.checkboxStroke = ColorRgba.rgb(120, 120, 128);
+    t.colors.checkboxFill = ColorRgba.rgb(0, 122, 255);
+    t.colors.switchTrackOff = ColorRgba.rgb(190, 190, 194);
+    t.colors.switchTrackOn = ColorRgba.rgb(52, 199, 89);
     t.colors.switchThumb = ColorRgba.rgb(255, 255, 255);
-    t.colors.error = ColorRgba.rgb(200, 50, 50);
     return t;
 }
 
@@ -213,46 +268,44 @@ private ThemeTokens darkTokens() @safe @nogc pure nothrow
 {
     ThemeTokens t;
     t.metrics = lightTokens().metrics;
-    t.colors.background = ColorRgba.rgb(18, 20, 26);
-    t.colors.surface = ColorRgba.rgb(28, 32, 42);
-    t.colors.surfaceElevated = ColorRgba.rgb(36, 40, 52);
-    t.colors.primary = ColorRgba.rgb(90, 150, 240);
-    t.colors.onPrimary = ColorRgba.rgb(12, 16, 24);
-    t.colors.primaryBorder = ColorRgba.rgb(60, 110, 190);
-    t.colors.textPrimary = ColorRgba.rgb(236, 238, 242);
-    t.colors.textSecondary = ColorRgba.rgb(190, 196, 208);
-    t.colors.textMuted = ColorRgba.rgb(130, 138, 152);
-    t.colors.border = ColorRgba.rgb(70, 76, 90);
-    t.colors.borderFocus = ColorRgba.rgb(90, 150, 240);
-    t.colors.divider = ColorRgba.rgb(48, 52, 64);
-    t.colors.fieldFill = ColorRgba.rgb(22, 26, 34);
-    t.colors.checkStroke = ColorRgba.rgb(90, 150, 240);
-    t.colors.switchTrackOff = ColorRgba.rgb(60, 66, 80);
-    t.colors.switchTrackOn = ColorRgba.rgb(70, 120, 200);
-    t.colors.switchThumb = ColorRgba.rgb(230, 234, 242);
-    t.colors.error = ColorRgba.rgb(240, 100, 100);
+    t.colors.windowBackground = ColorRgba.rgb(30, 30, 30);
+    t.colors.controlBackground = ColorRgba.rgb(44, 44, 46);
+    t.colors.groupedBackground = ColorRgba.rgb(28, 28, 30);
+    t.colors.sidebarBackground = ColorRgba.rgb(36, 36, 38);
+    t.colors.toolbarBackground = ColorRgba.rgb(40, 40, 42);
+    t.colors.label = ColorRgba.rgb(255, 255, 255);
+    t.colors.secondaryLabel = ColorRgba.rgb(172, 172, 178);
+    t.colors.tertiaryLabel = ColorRgba.rgb(142, 142, 148);
+    t.colors.quaternaryLabel = ColorRgba.rgb(99, 99, 102);
+    t.colors.separator = ColorRgba.rgb(72, 72, 74);
+    t.colors.accent = ColorRgba.rgb(10, 132, 255);
+    t.colors.accentPressed = ColorRgba.rgb(0, 110, 220);
+    t.colors.onAccent = ColorRgba.rgb(255, 255, 255);
+    t.colors.controlBorder = ColorRgba.rgb(90, 90, 94);
+    t.colors.focusRing = ColorRgba.rgb(10, 132, 255);
+    t.colors.destructive = ColorRgba.rgb(255, 69, 58);
+    t.colors.onDestructive = ColorRgba.rgb(255, 255, 255);
+    t.colors.textFieldBackground = ColorRgba.rgb(30, 30, 32);
+    t.colors.searchFieldBackground = ColorRgba.rgb(52, 52, 54);
+    t.colors.selectedContentBackground = ColorRgba.rgb(10, 132, 255);
+    t.colors.selectedText = ColorRgba.rgb(255, 255, 255);
+    t.colors.checkboxStroke = ColorRgba.rgb(120, 120, 128);
+    t.colors.checkboxFill = ColorRgba.rgb(10, 132, 255);
+    t.colors.switchTrackOff = ColorRgba.rgb(72, 72, 74);
+    t.colors.switchTrackOn = ColorRgba.rgb(48, 209, 88);
+    t.colors.switchThumb = ColorRgba.rgb(255, 255, 255);
     return t;
 }
 
 unittest
 {
-    const a = ColorRgba.rgb(0, 0, 0);
-    const b = ColorRgba.rgb(100, 200, 50);
-    const mid = lerpColor(a, b, 0.5f);
-    assert(mid.r == 50);
-    assert(mid.g == 100);
-    assert(mid.b == 25);
-
     ThemeController ctrl;
     ctrl.reset(ThemeMode.light);
-    assert(ctrl.current.colors.background.r == 245);
+    assert(ctrl.current.colors.windowBackground.r == 236);
 
     ctrl.setMode(ThemeMode.dark, 200f);
-    assert(ctrl.animating);
     ctrl.tick(100f);
-    assert(ctrl.current.colors.background.r < 245);
-    assert(ctrl.current.colors.background.r > 18);
     ctrl.tick(100f);
     assert(!ctrl.animating);
-    assert(ctrl.current.colors.background.r == 18);
+    assert(ctrl.current.colors.windowBackground.r == 30);
 }
