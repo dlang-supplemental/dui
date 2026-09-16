@@ -18,8 +18,8 @@ Depends on: link:https://github.com/dlang-supplemental/dew[`dew`]. Slogan: *Dew 
 * [*x*] Focus traversal (`focusNext` / `activateFocused` over dew Tab cycle)
 * [*x*] Navigation stack / routing (`NavStack`, `backButton`)
 * [*x*] Gesture layer (`onGesture` Tap / Drag / Swipe; `scrollable` helper)
-* [*x*] Theme tokens (`Light` / `Dark`), animated color switch (`ThemeController`), themed paint + seed components
-* [*x*] `examples/gallery` (headless) with light/dark toggle
+* [*x*] Minimal theme tokens (`Light` / `Dark`), `ThemeController` color lerp, themed paint hook on `DuiApp`
+* [ ] Desktop component host + sophisticated gallery — **deferred** until tgc responsiveness testing is green
 * Validation / IME / accessibility still open
 * Before DUB tag: flip `dub.sdl` dew dep from `path="../dew"` to `version="~>0.1.4"` once dew `v0.1.4` is on the registry
 

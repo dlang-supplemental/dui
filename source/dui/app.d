@@ -6,7 +6,6 @@ import dew.layout;
 import dui.state;
 import dui.theme;
 import dui.theme_paint;
-import dui.components;
 
 alias RootBuilder = Widget delegate(ref UiBuilder ui) @safe;
 
@@ -42,9 +41,6 @@ struct DuiApp
         paintHints.clear();
         dew.ui.store.clear();
         beginUi(dew.ui);
-        beginThemeComponents(&paintHints);
-        scope (exit)
-            endThemeComponents();
         if (buildRoot !is null)
             dew.setRoot(buildRoot(dew.ui));
         needsRebuild = false;
@@ -179,7 +175,7 @@ unittest
 {
     DuiApp app;
     app.init((ref UiBuilder ui) {
-        return themedButton(app.theme.current, "Hi");
+        return Button("Hi").touchFriendly();
     }, new SoftwareBackend(200, 80));
 
     app.dew.resize(200, 80);
