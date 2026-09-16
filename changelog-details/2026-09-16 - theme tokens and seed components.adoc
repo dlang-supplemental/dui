@@ -1,0 +1,7 @@
+= 2026-09-16 - Theme tokens and seed components
+
+* `ThemeMode`, `ThemeTokens`, `Theme`, and `ThemeController` with ~225 ms color lerps (no layout animation).
+* Token-aware `paintThemedTree` in dui (dew `paint_pass` still uses fixed colors when themed paint is off).
+* Seed components: `themedText`, `themedButton`, `themedTextField`, `themedCheckBox`, `themedSwitch`, `themedCard`, `themedDivider`, `themedScreen`, plus bound field helpers.
+* `examples/gallery` headless demo with light/dark toggle and transition check.
+* Follow-up: upstream `ColorRgba` lerp helper in dew; optional per-node text color overrides in engine paint.
