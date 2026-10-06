@@ -20,11 +20,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout dui
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: dui
       - name: Checkout dew (matching branch, else main)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: dlang-supplemental/dew
           path: dew
@@ -32,12 +32,12 @@ jobs:
         continue-on-error: true
       - name: Checkout dew main fallback
         if: hashFiles('dew/dub.sdl') == ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: dlang-supplemental/dew
           path: dew
           ref: main
-      - uses: dlang-community/setup-dlang@v1
+      - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - run: dub test --compiler=ldc2

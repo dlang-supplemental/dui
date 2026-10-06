@@ -27,8 +27,8 @@ jobs:
             triplet: macos-arm64
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dlang-community/setup-dlang@v1
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ldc-latest
       - name: Build hello
@@ -40,7 +40,7 @@ jobs:
           mkdir -p "dist/${{ matrix.triplet }}"
           cp examples/hello/dui-hello* "dist/${{ matrix.triplet }}/" 2>/dev/null || true
           ls -la "dist/${{ matrix.triplet }}"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: app-${{ matrix.triplet }}
           path: dist/${{ matrix.triplet }}/**
@@ -50,7 +50,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: slices
       - name: Zip
@@ -61,7 +61,7 @@ jobs:
             trip=${d#slices/app-}
             (cd "$d" && zip -r "../../release/dui-hello-${trip}.zip" .)
           done
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: release/*
           generate_release_notes: true
