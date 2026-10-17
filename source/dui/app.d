@@ -2,7 +2,10 @@
 module dui.app;
 
 import dew;
+import dew.layout;
 import dui.state;
+import dui.theme;
+import dui.theme_paint;
 
 alias RootBuilder = Widget delegate(ref UiBuilder ui) @safe;
 
@@ -12,10 +15,15 @@ struct DuiApp
     App dew;
     RootBuilder buildRoot;
     bool needsRebuild = true;
+    /// When true, `frame` paints with `theme.current` instead of dew defaults.
+    bool themedPaint = true;
+    ThemeController theme;
+    ThemePaintHints paintHints;
 
     void init(RootBuilder builder, RenderBackend backend = null) @safe
     {
         buildRoot = builder;
+        theme.reset(ThemeMode.light);
         if (backend !is null)
             dew.backend = backend;
         beginUi(dew.ui);
@@ -30,6 +38,7 @@ struct DuiApp
 
     void rebuild() @safe
     {
+        paintHints.clear();
         dew.ui.store.clear();
         beginUi(dew.ui);
         if (buildRoot !is null)
@@ -37,11 +46,31 @@ struct DuiApp
         needsRebuild = false;
     }
 
-    void frame() @safe
+    /// Advance theme color animation then layout/paint. Pass `dtMs` each frame when animating.
+    void frame(float dtMs = 0) @safe
     {
+        if (dtMs > 0)
+            theme.tick(dtMs);
+        else if (theme.animating)
+            theme.tick(16f);
         if (needsRebuild)
             rebuild();
-        dew.frame();
+        if (themedPaint)
+            themedFrame();
+        else
+            dew.frame();
+    }
+
+    private void themedFrame() @safe
+    {
+        if (dew.scaleSource !is null)
+            dew.contentScale = dew.scaleSource.contentScale();
+        layoutTree(dew.ui.store, dew.root, dew.width, dew.height);
+        dew.list.clear();
+        paintThemedTree(dew.ui.store, dew.root, dew.list, theme.current, paintHints);
+        dew.list.applyContentScale(dew.contentScale);
+        if (dew.backend !is null)
+            dew.backend.present(dew.list, cast(uint) dew.physicalWidth, cast(uint) dew.physicalHeight);
     }
 
     /// Dispatch pointer; handlers may dirty state — next `frame` rebuilds.
@@ -140,4 +169,22 @@ unittest
     assert(found);
     assert(app.tap(bx + bw * 0.5f, by + bh * 0.5f));
     assert(clicks.value == 2);
+}
+
+unittest
+{
+    DuiApp app;
+    app.init((ref UiBuilder ui) {
+        return Button("Hi").touchFriendly();
+    }, new SoftwareBackend(200, 80));
+
+    app.dew.resize(200, 80);
+    app.frame();
+    bool sawPrimary;
+    foreach (ref cmd; app.dew.list.cmds)
+    {
+        if (cmd.op == DrawOp.FillRoundedRect && cmd.color.r == app.theme.current.colors.accent.r)
+            sawPrimary = true;
+    }
+    assert(sawPrimary);
 }

@@ -40,3 +40,5 @@ examples/**/dui-hello
 examples/**/dui-hello.exe
 !/.editorconfig
 !/.gitattributes
+examples/**/dui-gallery
+examples/**/dui-gallery.exe
