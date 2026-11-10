@@ -1,0 +1,55 @@
+<a id="readme-top"></a>
+<div align="center">
+<a href="https://code.dlang.org/packages/dui"><img src="https://img.shields.io/dub/v/dui.svg?style=for-the-badge" alt="Dub version"></a>
+<a href="https://github.com/dlang-supplemental/dui/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dlang-supplemental/dui.svg?style=for-the-badge" alt="License"></a>
+<br />
+<h3 align="center">dui</h3>
+<p align="center">
+App-kit on top of <a href="https://github.com/dlang-supplemental/dew">dew</a> — state helpers and higher-level UI sugar for D.<br />
+Engine slogan: <strong>Dew it!</strong>
+</p>
+</div>
+
+
+## Role split
+
+| Package | Owns |
+| --- | --- |
+| `dew` | Layout, DSL/markup, paint, Vello/wgpu, **DPI/content scale** (`dew.scale`), **touch/pointer/focus primitives**, TextField/CheckBox nodes |
+| `dui` | `DuiApp`, `State!T`, forms/focus/nav/gesture helpers |
+
+## Quick start
+
+```d
+import dui;
+
+void main()
+{
+    State!int n = State!int(0);
+    DuiApp app;
+    app.bind(n);
+    app.init((ref UiBuilder ui) {
+        return Button("Go").touchFriendly().onClick(() { n.update(v => v + 1); });
+    }, new SoftwareBackend(640, 400));
+    app.frame();
+}
+```
+
+Use `app.tap(x, y)` in tests (Down+Up). Buttons click on pointer Up.
+
+Engine package is **`dew`** only (legacy DUB `rmgui` was removed).
+DPI / whole-UI scale lives in **dew** (`import dew` re-exports `dew.scale`). Dui hosts inherit `App.contentScale` via `DuiApp.dew` — no separate dui scale API.
+
+## Roadmap
+
+Engine gaps and shared priorities: [dew ROADMAP.adoc](https://github.com/dlang-supplemental/dew/blob/main/ROADMAP.adoc).
+
+dui-specific gaps (forms, focus, navigation, gesture layer): [ROADMAP.adoc](ROADMAP.adoc).
+
+## Changelog
+
+See [CHANGELOG.adoc](CHANGELOG.adoc).
+
+## License
+
+BSL-1.0

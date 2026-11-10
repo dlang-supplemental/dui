@@ -1,5 +1,11 @@
 = changelog
 
+== 2026-11-10
+
+=== Registry readme
+
+* Version 0.1.5 publishes a root `README.md` so code.dlang.org can show the listing.
+
 == 2026-09-16 - Theme tokens and seed components
 
 * Minimal theme tokens (`ThemeMode`, semantic `ThemeColors`, `ThemeMetrics`) and `ThemeController` color transitions (~225 ms).
